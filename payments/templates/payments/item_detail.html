@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <h2>{{ object.name }}</h2>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h3> {{ object.price }} </h3>
+                <a href='{% url "cart:payment-detail" object.pk %}' type="button"
+                   class="btn btn-outline-warning">Buy</a>
+                <div class="description mid-checkout-content"><br>
+                <p itemprop="description">Описание: {{ object.description }}</p>
+            </div>
+          </div>
+        </div>
+    </div>
+</body>
+</html>
