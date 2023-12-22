@@ -14,19 +14,22 @@ class PaymentViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         stripe.api_key = settings.STRIPE_KEY
 
-        price = stripe.Price.create(
-            currency="rub",
-            unit_amount=request.data.get('price'),
-            product_data={"name": request.data.get('name')},
-        )
-
-        new_pay = stripe.checkout.Session.create(
-            success_url="https://example.com/success",
-            line_items=[{"price": price.id, "quantity": 1}],
+        session = stripe.checkout.Session.create(
+            line_items=[
+                {
+                    "price_data": {
+                        "currency": "usd",
+                        "product_data": {"name": request.data.get('name')},
+                        "unit_amount": request.data.get('price'),
+                    },
+                    "quantity": 1,
+                },
+            ],
             mode="payment",
+            success_url=settings.DOMAIN_URL + f'/cart/item/{request.data.get("id")}',
         )
 
-        return Response({new_pay.id}, status=status.HTTP_200_OK)
+        return Response({session.id}, status=status.HTTP_200_OK)
 
 
 class ItemDetailView(DetailView):

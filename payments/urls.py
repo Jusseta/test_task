@@ -6,10 +6,7 @@ from payments.views import PaymentViewSet, ItemDetailView
 app_name = PaymentsConfig.name
 
 
-router_payment = DefaultRouter()
-router_payment.register(r'buy', PaymentViewSet, basename='payment')
-
-
 urlpatterns = [
+    path('buy/<int:pk>/', PaymentViewSet.as_view({'get': 'retrieve'}), name='buy'),
     path('item/<int:pk>/', ItemDetailView.as_view(), name='item_detail'),
-] + router_payment.urls
+]

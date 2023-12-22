@@ -133,3 +133,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STRIPE_KEY = os.getenv('STRIPE_KEY')
+
+DOMAIN_URL = os.getenv('DOMAIN_URL')
